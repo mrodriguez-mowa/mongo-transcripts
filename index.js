@@ -46,6 +46,9 @@ const transcript = async () => {
             type: Number,
             default: 0
         },
+        sentTo: {
+            type: [String] // USER ID
+        } ,
         classifiedAt: {
             type: Date,
             default: new Date()
