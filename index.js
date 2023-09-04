@@ -4,6 +4,8 @@ const util = require('util')
 const transcripts = fs.readdirSync("./data")
 const { getAudioDurationInSeconds } = require('get-audio-duration')
 
+const ObjectId = mongoose.Types.ObjectId
+
 const transcript = async () => {
     const transcriptDetails = await Promise.all(transcripts.map(async element => {
         const text = fs.readFileSync("./data/" + element, "utf-8")
@@ -47,7 +49,7 @@ const transcript = async () => {
             default: 0
         },
         sentTo: {
-            type: [String] // USER ID
+            type: [ObjectId] // USER ID
         } ,
         classifiedAt: {
             type: Date,
@@ -65,7 +67,7 @@ const transcript = async () => {
     }))
 
     const Conversation = mongoose.models.Conversation ?? mongoose.model("Conversation", new mongoose.Schema({
-        audioId: String,
+        audioId: ObjectId,
         originalSpeaker: String,
         message: String,
         labeledTranscriptions: {
@@ -95,7 +97,7 @@ const transcript = async () => {
 
         for (const convo of transcriptDetails[i].convo) {
             const conversation = new Conversation({
-                audioId,
+                audioId: new ObjectId(audioId),
                 originalSpeaker: convo.speaker,
                 message: convo.message
             })
