@@ -58,7 +58,8 @@ const transcript = async () => {
     }))
 
     const ClassificationDetail = mongoose.models.ClassificationDetail ?? mongoose.model("ClassificationDetail", new mongoose.Schema({
-        classifiedBy: String,
+        conversationId: ObjectId,
+        classifiedBy: ObjectId,
         newLabel: String,
         classifiedAt: {
             type: Date,
